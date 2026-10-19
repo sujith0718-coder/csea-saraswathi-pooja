@@ -18,6 +18,7 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
+      className="hero-section"
       style={{
         position: 'relative',
         minHeight: '100vh',
@@ -32,24 +33,27 @@ export const Hero: React.FC = () => {
       {/* Living Artwork Canvas (Desktop & Mobile) */}
       <HeroCanvas />
 
-      {/* Responsive Contrast Overlays */}
+      {/* Desktop Contrast Overlay: Leaves the Goddess and Veena on the right clear and vibrant */}
       <div
         className="hero-overlay-desktop"
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(90deg, rgba(255, 247, 232, 0.96) 0%, rgba(255, 247, 232, 0.90) 38%, rgba(255, 247, 232, 0.45) 58%, rgba(255, 247, 232, 0.05) 80%, rgba(255, 247, 232, 0) 100%)',
+          background:
+            'linear-gradient(90deg, rgba(255, 247, 232, 0.96) 0%, rgba(255, 247, 232, 0.90) 38%, rgba(255, 247, 232, 0.45) 58%, rgba(255, 247, 232, 0.05) 80%, rgba(255, 247, 232, 0) 100%)',
           pointerEvents: 'none',
           zIndex: 1,
         }}
       />
 
+      {/* Mobile Contrast Overlay: Soft top & bottom scrims; MIDDLE 40% is 100% transparent to showcase Goddess & animation */}
       <div
         className="hero-overlay-mobile"
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(180deg, rgba(255, 247, 232, 0.92) 0%, rgba(255, 247, 232, 0.82) 48%, rgba(255, 247, 232, 0.35) 72%, rgba(255, 247, 232, 0.90) 100%)',
+          background:
+            'linear-gradient(180deg, rgba(255, 247, 232, 0.95) 0%, rgba(255, 247, 232, 0.72) 22%, rgba(255, 247, 232, 0) 38%, rgba(255, 247, 232, 0) 65%, rgba(255, 247, 232, 0.78) 82%, rgba(255, 247, 232, 0.96) 100%)',
           pointerEvents: 'none',
           zIndex: 1,
           display: 'none',
@@ -58,7 +62,7 @@ export const Hero: React.FC = () => {
 
       {/* Hero Foreground Content */}
       <div
-        className="container"
+        className="container hero-container"
         style={{
           position: 'relative',
           zIndex: 2,
@@ -74,162 +78,174 @@ export const Hero: React.FC = () => {
           }}
           className="hero-text-block"
         >
-          {/* Eyebrow Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{ marginBottom: '1.25rem' }}
-          >
-            <div className="gold-badge">
-              <span role="img" aria-label="Lamp" style={{ fontSize: '0.9rem' }}>
-                🪔
-              </span>
-              <span>{hero.eyebrow}</span>
-            </div>
-          </motion.div>
-
-          {/* Main Heading: "HAPPY SARASWATHI POOJA" */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif"
-            style={{
-              fontSize: 'clamp(2.6rem, 5.5vw, 4.8rem)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              letterSpacing: '-0.02em',
-              color: 'var(--color-emerald)',
-              marginBottom: '0.75rem',
-            }}
-          >
-            Happy Saraswathi <br />
-            <span className="text-gold-gradient">Pooja</span>
-          </motion.h1>
-
-          {/* Ornamental Divider */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            style={{ margin: '0.25rem 0 1rem 0' }}
-          >
-            <OrnamentalDivider variant="lotus" />
-          </motion.div>
-
-          {/* Supporting Line: "Where knowledge blossoms, wisdom leads." */}
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif"
-            style={{
-              fontSize: 'clamp(1.25rem, 2.5vw, 1.85rem)',
-              fontStyle: 'italic',
-              fontWeight: 500,
-              color: 'var(--color-gold-dark)',
-              lineHeight: 1.4,
-              marginBottom: '0.75rem',
-            }}
-          >
-            "{hero.tagline}"
-          </motion.p>
-
-          {/* Secondary Line: "Celebrating knowledge, creativity, and new beginnings." */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)',
-              color: 'var(--color-text-muted)',
-              lineHeight: 1.6,
-              maxWidth: '540px',
-              marginBottom: '2rem',
-            }}
-          >
-            {hero.subtitle}
-          </motion.p>
-
-          {/* Core Pillars: "Learn with Curiosity", "Grow with Gratitude", "Dream with Courage" */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55 }}
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '0.85rem',
-              marginBottom: '2.5rem',
-            }}
-          >
-            {hero.corePillars.map((pillar) => (
-              <div
-                key={pillar.label}
-                className="glass-card"
-                style={{
-                  padding: '0.6rem 1.15rem',
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  gap: '0.4rem',
-                  borderRadius: '9999px',
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontWeight: 700,
-                    fontSize: '1.02rem',
-                    color: 'var(--color-emerald)',
-                    letterSpacing: '0.01em',
-                  }}
-                >
-                  {pillar.label}
+          {/* Top Content Group */}
+          <div className="hero-top-group">
+            {/* Eyebrow Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              style={{ marginBottom: '1rem' }}
+            >
+              <div className="gold-badge">
+                <span role="img" aria-label="Lamp" style={{ fontSize: '0.9rem' }}>
+                  🪔
                 </span>
-                <span
-                  style={{
-                    fontSize: '0.85rem',
-                    color: 'var(--color-gold-dark)',
-                    fontWeight: 500,
-                    marginLeft: '0.2rem',
-                  }}
-                >
-                  {pillar.detail}
-                </span>
+                <span>{hero.eyebrow}</span>
               </div>
-            ))}
-          </motion.div>
+            </motion.div>
 
-          {/* Action & Scroll Prompt */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.65 }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1.25rem',
-              flexWrap: 'wrap',
-            }}
-          >
-            <button
-              type="button"
-              onClick={scrollToStory}
-              className="btn-primary"
+            {/* Main Heading: "Happy Saraswathi Pooja" */}
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="font-serif hero-title"
+              style={{
+                fontSize: 'clamp(2.4rem, 5.5vw, 4.8rem)',
+                fontWeight: 700,
+                lineHeight: 1.1,
+                letterSpacing: '-0.02em',
+                color: 'var(--color-emerald)',
+                marginBottom: '0.5rem',
+              }}
             >
-              <Sparkles size={16} />
-              <span>{hero.scrollPrompt}</span>
-              <ChevronDown size={16} />
-            </button>
+              Happy Saraswathi <br />
+              <span className="text-gold-gradient">Pooja</span>
+            </motion.h1>
 
-            <a
-              href="#blessings"
-              className="btn-secondary"
+            {/* Ornamental Divider */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              style={{ margin: '0.15rem 0 0.85rem 0' }}
             >
-              <span>Celebration Wishes</span>
-            </a>
-          </motion.div>
+              <OrnamentalDivider variant="lotus" />
+            </motion.div>
+
+            {/* Supporting Line: "Where knowledge blossoms, wisdom leads." */}
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="font-serif hero-tagline"
+              style={{
+                fontSize: 'clamp(1.2rem, 2.4vw, 1.85rem)',
+                fontStyle: 'italic',
+                fontWeight: 500,
+                color: 'var(--color-gold-dark)',
+                lineHeight: 1.35,
+                marginBottom: '0.5rem',
+              }}
+            >
+              "{hero.tagline}"
+            </motion.p>
+
+            {/* Secondary Line: "Celebrating knowledge, creativity, and new beginnings." */}
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="hero-subtitle"
+              style={{
+                fontSize: 'clamp(0.92rem, 1.2vw, 1.08rem)',
+                color: 'var(--color-text-muted)',
+                lineHeight: 1.55,
+                maxWidth: '540px',
+                marginBottom: '1.75rem',
+              }}
+            >
+              {hero.subtitle}
+            </motion.p>
+          </div>
+
+          {/* On Mobile: Visual Window Spacer so Goddess, Veena, Lotus, and Living Animation Mingle Beautifully */}
+          <div className="hero-art-spacer" aria-hidden="true" />
+
+          {/* Bottom Content Group (Pillars & Action Buttons) */}
+          <div className="hero-bottom-group" style={{ width: '100%' }}>
+            {/* Core Pillars: "Learn with Curiosity", "Grow with Gratitude", "Dream with Courage" */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.55 }}
+              className="hero-pillars-group"
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '0.85rem',
+                marginBottom: '2rem',
+              }}
+            >
+              {hero.corePillars.map((pillar) => (
+                <div
+                  key={pillar.label}
+                  className="glass-card hero-pillar-chip"
+                  style={{
+                    padding: '0.55rem 1.15rem',
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    gap: '0.4rem',
+                    borderRadius: '9999px',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-serif)',
+                      fontWeight: 700,
+                      fontSize: '1rem',
+                      color: 'var(--color-emerald)',
+                      letterSpacing: '0.01em',
+                    }}
+                  >
+                    {pillar.label}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: '0.82rem',
+                      color: 'var(--color-gold-dark)',
+                      fontWeight: 500,
+                      marginLeft: '0.2rem',
+                    }}
+                  >
+                    {pillar.detail}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Action & Scroll Prompt */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.65 }}
+              className="hero-actions-group"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1.25rem',
+                flexWrap: 'wrap',
+              }}
+            >
+              <button
+                type="button"
+                onClick={scrollToStory}
+                className="btn-primary"
+              >
+                <Sparkles size={16} />
+                <span>{hero.scrollPrompt}</span>
+                <ChevronDown size={16} />
+              </button>
+
+              <a
+                href="#blessings"
+                className="btn-secondary"
+              >
+                <span>Celebration Wishes</span>
+              </a>
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -238,9 +254,10 @@ export const Hero: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
+        className="hero-scroll-indicator"
         style={{
           position: 'absolute',
-          bottom: '24px',
+          bottom: '20px',
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
@@ -267,21 +284,21 @@ export const Hero: React.FC = () => {
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
           style={{
-            width: '28px',
-            height: '42px',
-            borderRadius: '14px',
+            width: '26px',
+            height: '38px',
+            borderRadius: '13px',
             border: '1.5px solid var(--color-gold)',
             display: 'flex',
             justifyContent: 'center',
-            paddingTop: '6px',
+            paddingTop: '5px',
           }}
         >
           <motion.div
-            animate={{ y: [0, 12, 0], opacity: [1, 0.2, 1] }}
+            animate={{ y: [0, 10, 0], opacity: [1, 0.2, 1] }}
             transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
             style={{
               width: '4px',
-              height: '8px',
+              height: '7px',
               borderRadius: '2px',
               backgroundColor: 'var(--color-marigold)',
             }}
@@ -290,6 +307,10 @@ export const Hero: React.FC = () => {
       </motion.div>
 
       <style>{`
+        .hero-art-spacer {
+          display: none;
+        }
+
         @media (max-width: 860px) {
           .hero-overlay-desktop {
             display: none !important;
@@ -297,15 +318,80 @@ export const Hero: React.FC = () => {
           .hero-overlay-mobile {
             display: block !important;
           }
+          .hero-section {
+            min-height: 100svh !important;
+            padding-top: 72px !important;
+            padding-bottom: 24px !important;
+            align-items: stretch !important;
+          }
+          .hero-container {
+            display: flex !important;
+            flex-direction: column !important;
+            justifyContent: space-between !important;
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+          }
+          /* Remove the opaque beige card on phone so the artwork shines through! */
           .hero-text-block {
             max-width: 100% !important;
-            background: rgba(255, 247, 232, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 1.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(198, 154, 69, 0.35);
-            box-shadow: 0 10px 30px rgba(16, 54, 36, 0.08);
+            background: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            padding: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+            text-align: center !important;
+            align-items: center !important;
+          }
+          .hero-top-group {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+          }
+          .hero-title {
+            font-size: clamp(2rem, 7.2vw, 2.75rem) !important;
+            text-shadow: 0 1px 6px rgba(255, 247, 232, 0.9);
+          }
+          .hero-tagline {
+            font-size: clamp(1.05rem, 3.8vw, 1.3rem) !important;
+            text-shadow: 0 1px 5px rgba(255, 247, 232, 0.9);
+            margin-bottom: 0.35rem !important;
+          }
+          .hero-subtitle {
+            font-size: 0.88rem !important;
+            margin-bottom: 0.75rem !important;
+            text-shadow: 0 1px 4px rgba(255, 247, 232, 0.85);
+          }
+          /* Visual stage window on phone for Goddess, Veena, and animation */
+          .hero-art-spacer {
+            display: block !important;
+            height: clamp(180px, 32vh, 270px) !important;
+            width: 100% !important;
+          }
+          .hero-bottom-group {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+          }
+          .hero-pillars-group {
+            justify-content: center !important;
+            gap: 0.45rem !important;
+            margin-bottom: 1.25rem !important;
+          }
+          .hero-pillar-chip {
+            padding: 0.42rem 0.85rem !important;
+            background: rgba(255, 252, 245, 0.88) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            box-shadow: 0 2px 8px rgba(16, 54, 36, 0.1) !important;
+          }
+          .hero-actions-group {
+            justify-content: center !important;
+            gap: 0.75rem !important;
+          }
+          .hero-scroll-indicator {
+            display: none !important;
           }
         }
       `}</style>
