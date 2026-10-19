@@ -1,0 +1,344 @@
+/* ==========================================================================
+   SARASWATHI POOJA CELEBRATION - DESIGN SYSTEM
+   CSEA · PSG College of Technology
+   ========================================================================== */
+
+:root {
+  /* Curated Color Palette */
+  --color-ivory: #FFF7E8;
+  --color-cream: #F8EBD2;
+  --color-cream-light: #FDF9F0;
+  --color-emerald: #17452F;
+  --color-forest: #103624;
+  --color-forest-dark: #0A2216;
+  --color-gold: #C69A45;
+  --color-gold-light: #DFC07A;
+  --color-gold-dark: #A1792B;
+  --color-marigold: #E9A12B;
+  --color-marigold-warm: #F48225;
+  --color-lotus: #E8A6B2;
+  --color-lotus-soft: #F9E3E7;
+  --color-text-dark: #263329;
+  --color-text-muted: #4E6053;
+  --color-text-light: #F4EAD5;
+  --color-border-gold: rgba(198, 154, 69, 0.28);
+  --color-border-subtle: rgba(16, 54, 36, 0.12);
+
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #DFC07A 0%, #C69A45 50%, #9E7428 100%);
+  --gradient-emerald: linear-gradient(180deg, #103624 0%, #0A2216 100%);
+  --gradient-cream-overlay: linear-gradient(180deg, rgba(255, 247, 232, 0.94) 0%, rgba(248, 235, 210, 0.98) 100%);
+  --gradient-hero-desktop: linear-gradient(90deg, rgba(255, 247, 232, 0.98) 0%, rgba(255, 247, 232, 0.88) 42%, rgba(255, 247, 232, 0.2) 68%, rgba(255, 247, 232, 0) 100%);
+  --gradient-hero-mobile: linear-gradient(180deg, rgba(255, 247, 232, 0.96) 0%, rgba(255, 247, 232, 0.85) 45%, rgba(255, 247, 232, 0.25) 75%, rgba(255, 247, 232, 0.85) 100%);
+
+  /* Typography */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-display: 'Cinzel Decorative', 'Cormorant Garamond', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Shadows */
+  --shadow-subtle: 0 4px 20px -2px rgba(16, 54, 36, 0.08);
+  --shadow-warm: 0 10px 30px -5px rgba(198, 154, 69, 0.22);
+  --shadow-deep: 0 20px 45px -10px rgba(10, 34, 22, 0.25);
+  --shadow-gold-glow: 0 0 25px rgba(233, 161, 43, 0.35);
+
+  /* Transitions */
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.2s ease;
+}
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--color-ivory);
+  color: var(--color-text-dark);
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  line-height: 1.65;
+  background: var(--color-ivory);
+  position: relative;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-gold);
+  color: #FFFFFF;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 6px;
+  border: 2px solid var(--color-cream);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-marigold);
+}
+
+/* Typography Base Classes */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Section Container */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.25rem, 4vw, 2.5rem);
+  padding-right: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.25rem, 4vw, 2.5rem);
+  padding-right: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* Ornamental Accents */
+.ornament-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.ornament-line::before,
+.ornament-line::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  max-width: 120px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+.ornament-symbol {
+  color: var(--color-marigold);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(255, 252, 245, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border-gold);
+  border-radius: 16px;
+  box-shadow: var(--shadow-subtle);
+  transition: var(--transition-smooth);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-warm);
+  border-color: rgba(198, 154, 69, 0.45);
+}
+
+.glass-card-dark {
+  background: rgba(16, 54, 36, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(223, 192, 122, 0.25);
+  border-radius: 16px;
+  box-shadow: var(--shadow-deep);
+  color: var(--color-text-light);
+}
+
+/* Gold Pill Badge */
+.gold-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-emerald);
+  background: linear-gradient(135deg, rgba(248, 235, 210, 0.95), rgba(255, 247, 232, 0.95));
+  border: 1px solid var(--color-gold);
+  box-shadow: 0 2px 8px rgba(198, 154, 69, 0.15);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.85rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 9999px;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #17452F 0%, #103624 100%);
+  border: 1px solid var(--color-gold);
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: var(--shadow-warm);
+  transition: var(--transition-smooth);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #C69A45 0%, #E9A12B 100%);
+  color: #103624;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold-glow);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  color: var(--color-emerald);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--color-border-gold);
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.btn-secondary:hover {
+  background: #FFFFFF;
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-subtle);
+}
+
+/* Gold Text Shimmer */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #A87D2B 0%, #C69A45 40%, #E9A12B 80%, #C69A45 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Image Vignette Framing */
+.artwork-frame {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-deep);
+  border: 1px solid var(--color-gold);
+}
+
+.artwork-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 20px;
+  box-shadow: inset 0 0 35px rgba(16, 54, 36, 0.28);
+}
+
+/* Floating Flower Petals Container */
+.petals-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 25;
+}
+
+.petal {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(110vh) translateX(80px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes petalSway {
+  0%, 100% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 35px;
+  }
+}
+
+/* Subtle Breathing Diya Glow */
+@keyframes flameFlicker {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(233, 161, 43, 0.7)) scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(244, 130, 37, 0.9)) scale(1.06);
+    opacity: 1;
+  }
+}
+
+.flame-active {
+  animation: flameFlicker 2.5s ease-in-out infinite;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .petal {
+    display: none !important;
+  }
+}
