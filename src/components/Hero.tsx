@@ -82,9 +82,9 @@ export const Hero: React.FC = () => {
           <div className="hero-top-group">
             {/* Eyebrow Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               style={{ marginBottom: '1rem' }}
             >
               <div className="gold-badge">
@@ -97,9 +97,9 @@ export const Hero: React.FC = () => {
 
             {/* Main Heading: "Happy Saraswathi Pooja" */}
             <motion.h1
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="font-serif hero-title"
               style={{
                 fontSize: 'clamp(2.4rem, 5.5vw, 4.8rem)',
@@ -116,9 +116,9 @@ export const Hero: React.FC = () => {
 
             {/* Ornamental Divider */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.35, delay: 0.08 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
               style={{ margin: '0.15rem 0 0.85rem 0' }}
             >
               <OrnamentalDivider variant="lotus" />
@@ -126,9 +126,9 @@ export const Hero: React.FC = () => {
 
             {/* Supporting Line: "Where knowledge blossoms, wisdom leads." */}
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="font-serif hero-tagline"
               style={{
                 fontSize: 'clamp(1.2rem, 2.4vw, 1.85rem)',
@@ -144,9 +144,9 @@ export const Hero: React.FC = () => {
 
             {/* Secondary Line: "Celebrating knowledge, creativity, and new beginnings." */}
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="hero-subtitle"
               style={{
                 fontSize: 'clamp(0.92rem, 1.2vw, 1.08rem)',
@@ -167,9 +167,9 @@ export const Hero: React.FC = () => {
           <div className="hero-bottom-group" style={{ width: '100%' }}>
             {/* Core Pillars: "Learn with Curiosity", "Grow with Gratitude", "Dream with Courage" */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
+              transition={{ duration: 0.7, delay: 0.55 }}
               className="hero-pillars-group"
               style={{
                 display: 'flex',
@@ -217,9 +217,9 @@ export const Hero: React.FC = () => {
 
             {/* Action & Scroll Prompt */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.24 }}
+              transition={{ duration: 0.7, delay: 0.65 }}
               className="hero-actions-group"
               style={{
                 display: 'flex',

@@ -1,16 +1,14 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { ScrollProgress } from './components/ScrollProgress';
 import { Navbar } from './components/Navbar';
 import { FloatingPetals } from './components/FloatingPetals';
 import { Hero } from './components/Hero';
 import { CelebrationSection } from './sections/CelebrationSection';
-
-const WisdomSection = lazy(() => import('./sections/WisdomSection').then(m => ({ default: m.WisdomSection })));
-const LearningSection = lazy(() => import('./sections/LearningSection').then(m => ({ default: m.LearningSection })));
-const TogethernessSection = lazy(() => import('./sections/TogethernessSection').then(m => ({ default: m.TogethernessSection })));
-const FutureSection = lazy(() => import('./sections/FutureSection').then(m => ({ default: m.FutureSection })));
-const BlessingsSection = lazy(() => import('./sections/BlessingsSection').then(m => ({ default: m.BlessingsSection })));
-
+import { WisdomSection } from './sections/WisdomSection';
+import { LearningSection } from './sections/LearningSection';
+import { TogethernessSection } from './sections/TogethernessSection';
+import { FutureSection } from './sections/FutureSection';
+import { BlessingsSection } from './sections/BlessingsSection';
 
 export const App: React.FC = () => {
   return (
@@ -32,23 +30,20 @@ export const App: React.FC = () => {
         {/* Section A: The Celebration */}
         <CelebrationSection />
 
-        {/* Below-the-fold sections wrapped in Suspense for lightning-fast initial page view */}
-        <Suspense fallback={<div style={{ minHeight: '60vh', background: 'var(--color-cream-light)' }} />}>
-          {/* Section B: Wisdom & Knowledge */}
-          <WisdomSection />
+        {/* Section B: Wisdom & Knowledge */}
+        <WisdomSection />
 
-          {/* Section C: Study, Explore, Create */}
-          <LearningSection />
+        {/* Section C: Study, Explore, Create */}
+        <LearningSection />
 
-          {/* Section D: Gratitude & Togetherness */}
-          <TogethernessSection />
+        {/* Section D: Gratitude & Togetherness */}
+        <TogethernessSection />
 
-          {/* Section E: Dreams & Possibilities */}
-          <FutureSection />
+        {/* Section E: Dreams & Possibilities */}
+        <FutureSection />
 
-          {/* Section F: Final Blessings */}
-          <BlessingsSection />
-        </Suspense>
+        {/* Section F: Final Blessings */}
+        <BlessingsSection />
       </main>
     </div>
   );
