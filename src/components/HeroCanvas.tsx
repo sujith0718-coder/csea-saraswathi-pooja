@@ -20,27 +20,18 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
     // Zero-pad frame number: e.g. 1 -> "001"
     const pad = (n: number) => n.toString().padStart(3, '0');
 
-    // On mobile screens, use 14 sampled frames (every 3rd frame) to save 75% data and prevent lag
-    const isMobile = window.innerWidth < 860;
+    // 40 sequential frames on both phone and laptop for identical buttery smooth playback and pacing
+    const totalFrames = 40;
     const frameIndices: number[] = [];
-    if (isMobile) {
-      for (let i = 1; i <= 40; i += 3) {
-        frameIndices.push(i);
-      }
-      if (frameIndices[frameIndices.length - 1] !== 40) {
-        frameIndices.push(40);
-      }
-    } else {
-      for (let i = 1; i <= 40; i++) {
-        frameIndices.push(i);
-      }
+    for (let i = 1; i <= totalFrames; i++) {
+      frameIndices.push(i);
     }
 
     const images: HTMLImageElement[] = [];
     let preloadTimer: number | null = null;
     let nextTimer: number | null = null;
 
-    // Sequentially preload remaining frames (defined before handleImg1Ready to avoid TDZ ReferenceError)
+    // Sequentially preload remaining frames in the background
     const startSequentialPreload = () => {
       let step = 1;
 
@@ -53,7 +44,7 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         const frameImg = new Image();
         frameImg.onload = () => {
           if (!isMounted) return;
-          nextTimer = window.setTimeout(loadNext, isMobile ? 120 : 35);
+          nextTimer = window.setTimeout(loadNext, 40);
         };
         frameImg.onerror = () => {
           if (!isMounted) return;
