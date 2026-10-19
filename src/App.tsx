@@ -11,6 +11,14 @@ import { FutureSection } from './sections/FutureSection';
 import { BlessingsSection } from './sections/BlessingsSection';
 
 export const App: React.FC = () => {
+  React.useEffect(() => {
+    const splash = document.getElementById('splash-loader');
+    if (splash) {
+      splash.classList.add('hidden');
+      setTimeout(() => splash.remove(), 500);
+    }
+  }, []);
+
   return (
     <div className="app-root">
       {/* Scroll Progress Bar */}
