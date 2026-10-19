@@ -31,11 +31,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       }}
     >
       {/* Eyebrow Badge */}
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      <div
         style={{
           display: 'inline-flex',
           marginBottom: '0.85rem',
@@ -55,14 +51,10 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
         >
           {eyebrow}
         </span>
-      </motion.div>
+      </div>
 
       {/* Main Heading */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+      <h2
         className="font-serif"
         style={{
           fontSize: 'clamp(2rem, 3.8vw, 3.25rem)',
@@ -74,29 +66,21 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
         }}
       >
         {title}
-      </motion.h2>
+      </h2>
 
       {/* Ornamental Divider */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+      <div
         style={{
           display: 'flex',
           justifyContent: isCenter ? 'center' : 'flex-start',
         }}
       >
         <OrnamentalDivider theme={theme} variant="lotus" />
-      </motion.div>
+      </div>
 
       {/* Optional Subtitle */}
       {subtitle && (
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        <p
           className="font-serif"
           style={{
             fontSize: 'clamp(1.1rem, 2vw, 1.35rem)',
@@ -108,7 +92,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           }}
         >
           "{subtitle}"
-        </motion.p>
+        </p>
       )}
     </div>
   );

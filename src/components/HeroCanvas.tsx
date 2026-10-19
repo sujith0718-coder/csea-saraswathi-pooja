@@ -171,7 +171,11 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         style={{
           position: 'absolute',
           inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
           zIndex: 0,
+          display: 'block',
         }}
       />
 
@@ -183,6 +187,9 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         style={{
           position: 'absolute',
           inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
           zIndex: 1,
           opacity: isReady ? 1 : 0,
         }}

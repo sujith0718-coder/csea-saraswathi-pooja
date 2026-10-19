@@ -81,25 +81,17 @@ export const Hero: React.FC = () => {
           {/* Top Content Group */}
           <div className="hero-top-group">
             {/* Eyebrow Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              style={{ marginBottom: '1rem' }}
-            >
+            <div style={{ marginBottom: '1rem' }}>
               <div className="gold-badge">
                 <span role="img" aria-label="Lamp" style={{ fontSize: '0.9rem' }}>
                   🪔
                 </span>
                 <span>{hero.eyebrow}</span>
               </div>
-            </motion.div>
+            </div>
 
             {/* Main Heading: "Happy Saraswathi Pooja" */}
-            <motion.h1
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+            <h1
               className="font-serif hero-title"
               style={{
                 fontSize: 'clamp(2.4rem, 5.5vw, 4.8rem)',
@@ -112,23 +104,15 @@ export const Hero: React.FC = () => {
             >
               Happy Saraswathi <br />
               <span className="text-gold-gradient">Pooja</span>
-            </motion.h1>
+            </h1>
 
             {/* Ornamental Divider */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.35, delay: 0.08 }}
-              style={{ margin: '0.15rem 0 0.85rem 0' }}
-            >
+            <div style={{ margin: '0.15rem 0 0.85rem 0' }}>
               <OrnamentalDivider variant="lotus" />
-            </motion.div>
+            </div>
 
             {/* Supporting Line: "Where knowledge blossoms, wisdom leads." */}
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            <p
               className="font-serif hero-tagline"
               style={{
                 fontSize: 'clamp(1.2rem, 2.4vw, 1.85rem)',
@@ -140,13 +124,10 @@ export const Hero: React.FC = () => {
               }}
             >
               "{hero.tagline}"
-            </motion.p>
+            </p>
 
             {/* Secondary Line: "Celebrating knowledge, creativity, and new beginnings." */}
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+            <p
               className="hero-subtitle"
               style={{
                 fontSize: 'clamp(0.92rem, 1.2vw, 1.08rem)',
@@ -157,7 +138,7 @@ export const Hero: React.FC = () => {
               }}
             >
               {hero.subtitle}
-            </motion.p>
+            </p>
           </div>
 
           {/* On Mobile: Visual Window Spacer so Goddess, Veena, Lotus, and Living Animation Mingle Beautifully */}
@@ -166,10 +147,7 @@ export const Hero: React.FC = () => {
           {/* Bottom Content Group (Pillars & Action Buttons) */}
           <div className="hero-bottom-group" style={{ width: '100%' }}>
             {/* Core Pillars: "Learn with Curiosity", "Grow with Gratitude", "Dream with Courage" */}
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.15 }}
+            <div
               className="hero-pillars-group"
               style={{
                 display: 'flex',
@@ -213,13 +191,10 @@ export const Hero: React.FC = () => {
                   </span>
                 </div>
               ))}
-            </motion.div>
+            </div>
 
             {/* Action & Scroll Prompt */}
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.18 }}
+            <div
               className="hero-actions-group"
               style={{
                 display: 'flex',
@@ -244,16 +219,13 @@ export const Hero: React.FC = () => {
               >
                 <span>Celebration Wishes</span>
               </a>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Floating Scroll Indicator at bottom */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
+      <div
         className="hero-scroll-indicator"
         style={{
           position: 'absolute',
@@ -280,9 +252,7 @@ export const Hero: React.FC = () => {
         >
           Scroll Down
         </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+        <div
           style={{
             width: '26px',
             height: '38px',
@@ -293,9 +263,7 @@ export const Hero: React.FC = () => {
             paddingTop: '5px',
           }}
         >
-          <motion.div
-            animate={{ y: [0, 10, 0], opacity: [1, 0.2, 1] }}
-            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          <div
             style={{
               width: '4px',
               height: '7px',
@@ -303,8 +271,8 @@ export const Hero: React.FC = () => {
               backgroundColor: 'var(--color-marigold)',
             }}
           />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       <style>{`
         .hero-art-spacer {
