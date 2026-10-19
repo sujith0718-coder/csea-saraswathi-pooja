@@ -20,7 +20,7 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
     // Zero-pad frame number: e.g. 1 -> "001"
     const pad = (n: number) => n.toString().padStart(3, '0');
 
-    // On mobile screens, use 14 sampled frames (every 3rd frame) to save 75% data and prevent network lag
+    // On mobile screens, use 14 sampled frames (every 3rd frame) to save 75% data and prevent lag
     const isMobile = window.innerWidth < 860;
     const frameIndices: number[] = [];
     if (isMobile) {
@@ -49,8 +49,8 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         ctx.drawImage(img1, 0, 0, 1920, 1080);
         setIsReady(true);
       }
-      // Wait 800ms before starting sequential background frame loading to allow first view to settle
-      setTimeout(startSequentialPreload, 800);
+      // Start sequential preload with breathing room
+      setTimeout(startSequentialPreload, 600);
     };
 
     img1.onload = handleImg1Ready;
@@ -62,7 +62,7 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
       handleImg1Ready();
     }
 
-    // Sequentially preload remaining frames with breathing room to keep device smooth
+    // Sequentially preload remaining frames
     const startSequentialPreload = () => {
       let step = 1;
 
@@ -75,7 +75,6 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         const frameImg = new Image();
         frameImg.onload = () => {
           if (!isMounted) return;
-          // Paced preloading prevents cellular network congestion
           setTimeout(loadNext, isMobile ? 120 : 35);
         };
         frameImg.onerror = () => {
@@ -126,6 +125,7 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         }
 
         if (
+          candidate !== currentIdx &&
           images[candidate] &&
           images[candidate].complete &&
           images[candidate].naturalWidth > 0
@@ -161,7 +161,7 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         backgroundColor: '#FFF7E8',
       }}
     >
-      {/* High-Resolution Poster Image: Stays visible permanently in background so there is NEVER a blank/bleak flash */}
+      {/* High-Resolution Poster Image: Permanent background, never disappears */}
       <img
         src="/images/ezgif-frame-001.jpg"
         alt="Goddess Saraswathi in traditional courtyard with veena, lotus, brass lamps, books, and laptop"
@@ -175,7 +175,7 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         }}
       />
 
-      {/* Living Canvas Animator: Fades in seamlessly directly over the poster */}
+      {/* Living Canvas Animator: Active right above the poster */}
       <canvas
         ref={canvasRef}
         aria-hidden="true"
@@ -185,7 +185,6 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
           inset: 0,
           zIndex: 1,
           opacity: isReady ? 1 : 0,
-          transition: 'opacity 0.8s ease',
         }}
       />
     </div>
