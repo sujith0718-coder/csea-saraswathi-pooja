@@ -10,9 +10,6 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
   const isVisibleRef = useRef(true);
   const animFrameIdRef = useRef<number | null>(null);
 
-  // Total available frames in images/
-  const TOTAL_FRAMES = 40;
-
   useEffect(() => {
     let isMounted = true;
     const canvas = canvasRef.current;
@@ -20,10 +17,26 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
     const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
-    const images: HTMLImageElement[] = [];
-
     // Zero-pad frame number: e.g. 1 -> "001"
     const pad = (n: number) => n.toString().padStart(3, '0');
+
+    // On mobile screens, use 14 sampled frames (every 3rd frame) to save 75% data and prevent network lag
+    const isMobile = window.innerWidth < 860;
+    const frameIndices: number[] = [];
+    if (isMobile) {
+      for (let i = 1; i <= 40; i += 3) {
+        frameIndices.push(i);
+      }
+      if (frameIndices[frameIndices.length - 1] !== 40) {
+        frameIndices.push(40);
+      }
+    } else {
+      for (let i = 1; i <= 40; i++) {
+        frameIndices.push(i);
+      }
+    }
+
+    const images: HTMLImageElement[] = [];
 
     // Load Frame 1 immediately
     const img1 = new Image();
@@ -36,47 +49,47 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         ctx.drawImage(img1, 0, 0, 1920, 1080);
         setIsReady(true);
       }
-      startProgressivePreload();
+      // Wait 800ms before starting sequential background frame loading to allow first view to settle
+      setTimeout(startSequentialPreload, 800);
     };
 
     img1.onload = handleImg1Ready;
     img1.src = `/images/ezgif-frame-001.jpg`;
     images[0] = img1;
 
-    // In case image was already cached by browser
+    // If frame 1 is already in cache
     if (img1.complete && img1.naturalWidth > 0) {
       handleImg1Ready();
     }
 
-    // Progressively preload remaining frames in background
-    const startProgressivePreload = () => {
-      let index = 2;
+    // Sequentially preload remaining frames with breathing room to keep device smooth
+    const startSequentialPreload = () => {
+      let step = 1;
 
       const loadNext = () => {
-        if (!isMounted || index > TOTAL_FRAMES) return;
-        const currentIdx = index;
-        index++;
+        if (!isMounted || step >= frameIndices.length) return;
+        const targetFrameNum = frameIndices[step];
+        const currentSlot = step;
+        step++;
 
         const frameImg = new Image();
         frameImg.onload = () => {
           if (!isMounted) return;
-          // Trigger next frame download sequentially to avoid network congestion on mobile
-          loadNext();
+          // Paced preloading prevents cellular network congestion
+          setTimeout(loadNext, isMobile ? 120 : 35);
         };
         frameImg.onerror = () => {
           if (!isMounted) return;
-          loadNext();
+          setTimeout(loadNext, 80);
         };
-        frameImg.src = `/images/ezgif-frame-${pad(currentIdx)}.jpg`;
-        images[currentIdx - 1] = frameImg;
+        frameImg.src = `/images/ezgif-frame-${pad(targetFrameNum)}.jpg`;
+        images[currentSlot] = frameImg;
       };
 
-      // Start 2 concurrent preload threads
       loadNext();
-      setTimeout(loadNext, 40);
     };
 
-    // IntersectionObserver to pause playback when scrolled out of view
+    // IntersectionObserver to pause animation when scrolled past Hero
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -87,10 +100,10 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
     );
     observer.observe(canvas);
 
-    // Animation Loop: ~18-20 FPS for natural fluid motion
-    let currentFrame = 0;
+    // Animation Loop: ~16 FPS for natural fluid motion
+    let currentIdx = 0;
     let lastTime = performance.now();
-    const frameInterval = 1000 / 18; // ~18 FPS
+    const frameInterval = 1000 / 16;
 
     const render = (now: number) => {
       if (!isMounted) return;
@@ -99,15 +112,16 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
       if (isVisibleRef.current && elapsed >= frameInterval) {
         lastTime = now - (elapsed % frameInterval);
 
-        // Find next available loaded frame
-        let candidate = (currentFrame + 1) % TOTAL_FRAMES;
+        // Find next loaded candidate frame in our pool
+        const poolSize = frameIndices.length;
+        let candidate = (currentIdx + 1) % poolSize;
         let searchAttempts = 0;
 
         while (
-          searchAttempts < TOTAL_FRAMES &&
+          searchAttempts < poolSize &&
           (!images[candidate] || !images[candidate].complete || images[candidate].naturalWidth === 0)
         ) {
-          candidate = (candidate + 1) % TOTAL_FRAMES;
+          candidate = (candidate + 1) % poolSize;
           searchAttempts++;
         }
 
@@ -117,7 +131,7 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
           images[candidate].naturalWidth > 0
         ) {
           ctx.drawImage(images[candidate], 0, 0, 1920, 1080);
-          currentFrame = candidate;
+          currentIdx = candidate;
         }
       }
 
@@ -144,9 +158,10 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         width: '100%',
         height: '100%',
         overflow: 'hidden',
+        backgroundColor: '#FFF7E8',
       }}
     >
-      {/* High-Resolution Poster Image (Visible immediately, fallback) */}
+      {/* High-Resolution Poster Image: Stays visible permanently in background so there is NEVER a blank/bleak flash */}
       <img
         src="/images/ezgif-frame-001.jpg"
         alt="Goddess Saraswathi in traditional courtyard with veena, lotus, brass lamps, books, and laptop"
@@ -154,18 +169,23 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         loading="eager"
         className="hero-media-canvas"
         style={{
-          display: isReady ? 'none' : 'block',
+          position: 'absolute',
+          inset: 0,
+          zIndex: 0,
         }}
       />
 
-      {/* Living Canvas Animator */}
+      {/* Living Canvas Animator: Fades in seamlessly directly over the poster */}
       <canvas
         ref={canvasRef}
         aria-hidden="true"
         className="hero-media-canvas"
         style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
           opacity: isReady ? 1 : 0,
-          transition: 'opacity 0.6s ease',
+          transition: 'opacity 0.8s ease',
         }}
       />
     </div>

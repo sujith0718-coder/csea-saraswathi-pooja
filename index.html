@@ -19,6 +19,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪷</text></svg>" />
 
+    <!-- Preload Hero Image so browser fetches it immediately with highest priority -->
+    <link rel="preload" as="image" href="/images/ezgif-frame-001.jpg" fetchpriority="high" />
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,6 +29,20 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Critical instant styling: Sets festive background color so there is no white flash -->
+    <style>
+      html, body {
+        background-color: #FFF7E8;
+        color: #263329;
+        margin: 0;
+        padding: 0;
+      }
+      #root {
+        min-height: 100vh;
+        background-color: #FFF7E8;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
