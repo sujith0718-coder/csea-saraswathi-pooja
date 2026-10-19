@@ -37,32 +37,10 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
     }
 
     const images: HTMLImageElement[] = [];
+    let preloadTimer: number | null = null;
+    let nextTimer: number | null = null;
 
-    // Load Frame 1 immediately
-    const img1 = new Image();
-
-    const handleImg1Ready = () => {
-      if (!isMounted) return;
-      if (canvas && ctx) {
-        canvas.width = 1920;
-        canvas.height = 1080;
-        ctx.drawImage(img1, 0, 0, 1920, 1080);
-        setIsReady(true);
-      }
-      // Start sequential preload with breathing room
-      setTimeout(startSequentialPreload, 600);
-    };
-
-    img1.onload = handleImg1Ready;
-    img1.src = `/images/ezgif-frame-001.jpg`;
-    images[0] = img1;
-
-    // If frame 1 is already in cache
-    if (img1.complete && img1.naturalWidth > 0) {
-      handleImg1Ready();
-    }
-
-    // Sequentially preload remaining frames
+    // Sequentially preload remaining frames (defined before handleImg1Ready to avoid TDZ ReferenceError)
     const startSequentialPreload = () => {
       let step = 1;
 
@@ -75,11 +53,11 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
         const frameImg = new Image();
         frameImg.onload = () => {
           if (!isMounted) return;
-          setTimeout(loadNext, isMobile ? 120 : 35);
+          nextTimer = window.setTimeout(loadNext, isMobile ? 120 : 35);
         };
         frameImg.onerror = () => {
           if (!isMounted) return;
-          setTimeout(loadNext, 80);
+          nextTimer = window.setTimeout(loadNext, 80);
         };
         frameImg.src = `/images/ezgif-frame-${pad(targetFrameNum)}.jpg`;
         images[currentSlot] = frameImg;
@@ -87,6 +65,32 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
 
       loadNext();
     };
+
+    // Load Frame 1 immediately
+    const img1 = new Image();
+    let frame1Loaded = false;
+
+    const handleImg1Ready = () => {
+      if (!isMounted || frame1Loaded) return;
+      frame1Loaded = true;
+      if (canvas && ctx) {
+        canvas.width = 1920;
+        canvas.height = 1080;
+        ctx.drawImage(img1, 0, 0, 1920, 1080);
+        setIsReady(true);
+      }
+      // Start sequential preload with breathing room
+      preloadTimer = window.setTimeout(startSequentialPreload, 600);
+    };
+
+    img1.onload = handleImg1Ready;
+    img1.src = `/images/ezgif-frame-001.jpg`;
+    images[0] = img1;
+
+    // If frame 1 is already in cache
+    if (img1.complete && img1.naturalWidth > 0) {
+      handleImg1Ready();
+    }
 
     // IntersectionObserver to pause animation when scrolled past Hero
     const observer = new IntersectionObserver(
@@ -142,6 +146,8 @@ export const HeroCanvas: React.FC<HeroCanvasProps> = ({ className = '' }) => {
 
     return () => {
       isMounted = false;
+      if (preloadTimer !== null) clearTimeout(preloadTimer);
+      if (nextTimer !== null) clearTimeout(nextTimer);
       observer.disconnect();
       if (animFrameIdRef.current) {
         cancelAnimationFrame(animFrameIdRef.current);
