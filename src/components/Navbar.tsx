@@ -29,10 +29,39 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setMobileMenuOpen(false);
-    const target = document.querySelector(href);
+
+    const targetId = href.startsWith('#') ? href.slice(1) : href;
+    const target = document.getElementById(targetId);
+
+    const wasMobile = mobileMenuOpen;
+    if (wasMobile) {
+      setMobileMenuOpen(false);
+    }
+
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      const headerOffset = 70;
+      const targetPosition = Math.max(
+        0,
+        target.getBoundingClientRect().top + window.scrollY - headerOffset
+      );
+
+      // On mobile, allow the drawer close animation to initiate before scrolling
+      // to prevent mobile browsers (WebKit/Blink) from cancelling the smooth scroll.
+      if (wasMobile) {
+        setTimeout(() => {
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth',
+          });
+          window.history.pushState(null, '', href);
+        }, 80);
+      } else {
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth',
+        });
+        window.history.pushState(null, '', href);
+      }
     }
   };
 
@@ -242,15 +271,18 @@ export const Navbar: React.FC<NavbarProps> = () => {
                     fontSize: '1.05rem',
                     fontWeight: 600,
                     color: 'var(--color-text-dark)',
-                    padding: '0.4rem 0',
+                    padding: '0.75rem 0.25rem',
                     borderBottom: '1px solid rgba(198, 154, 69, 0.15)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
+                    cursor: 'pointer',
+                    touchAction: 'manipulation',
+                    WebkitTapHighlightColor: 'rgba(198, 154, 69, 0.15)',
                   }}
                 >
                   <span>{link.label}</span>
-                  <span style={{ color: 'var(--color-gold)', fontSize: '0.8rem' }}>→</span>
+                  <span style={{ color: 'var(--color-gold)', fontSize: '0.85rem' }}>→</span>
                 </a>
               ))}
               <a
@@ -258,9 +290,12 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 onClick={(e) => handleLinkClick(e, '#blessings')}
                 className="btn-primary"
                 style={{
-                  marginTop: '0.5rem',
+                  marginTop: '0.75rem',
                   width: '100%',
                   textAlign: 'center',
+                  cursor: 'pointer',
+                  touchAction: 'manipulation',
+                  WebkitTapHighlightColor: 'transparent',
                 }}
               >
                 <Sparkles size={16} />

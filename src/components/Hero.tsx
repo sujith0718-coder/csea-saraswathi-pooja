@@ -11,7 +11,12 @@ export const Hero: React.FC = () => {
   const scrollToStory = () => {
     const el = document.getElementById('celebration');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const headerOffset = 70;
+      const targetTop = Math.max(0, el.getBoundingClientRect().top + window.scrollY - headerOffset);
+      window.scrollTo({
+        top: targetTop,
+        behavior: 'smooth',
+      });
     }
   };
 
